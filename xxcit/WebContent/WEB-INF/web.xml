@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>MessageBoard</display-name>
+	<!-- 请求Servlet -->
+	<servlet>
+		<servlet-name>UserServlet</servlet-name>
+		<servlet-class>com.wp.service.UserServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>MessageServlet</servlet-name>
+		<servlet-class>com.wp.service.MessageServlet</servlet-class>
+	</servlet> 
+	<servlet>
+		<servlet-name>StudentServlet</servlet-name>
+		<servlet-class>com.wp.service.StudentServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ManagerServlet</servlet-name>
+		<servlet-class>com.wp.service.ManagerServlet</servlet-class>
+	
+	</servlet>
+	
+	<servlet>
+		<servlet-name>RevertServlet</servlet-name>
+		<servlet-class>com.wp.service.RevertServlet</servlet-class>
+	
+	</servlet>
+	
+	<servlet>
+    <servlet-name>ValidateCodeServlet</servlet-name>
+    <servlet-class>com.wp.service.ValidateCodeServlet</servlet-class>
+  </servlet>
+  
+    <servlet>
+    <servlet-name>CounterServlet</servlet-name>
+    <servlet-class>com.wp.service.CounterServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CounterServlet</servlet-name>
+    <url-pattern>/counter</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>ValidateCodeServlet</servlet-name>
+    <url-pattern>/validatecode</url-pattern>
+  </servlet-mapping>
+	
+	
+	<servlet-mapping>
+		<servlet-name>RevertServlet</servlet-name>
+		<url-pattern>/RevertServlet</url-pattern>
+	</servlet-mapping>
+	
+
+	<servlet-mapping>
+		<servlet-name>UserServlet</servlet-name>
+		<url-pattern>/UserServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>MessageServlet</servlet-name>
+		<url-pattern>/MessageServlet</url-pattern>
+	</servlet-mapping> 
+	<servlet-mapping>
+		<servlet-name>StudentServlet</servlet-name>
+		<url-pattern>/StudentServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>ManagerServlet</servlet-name>
+		<url-pattern>/ManagerServlet</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 过滤器 -->
+	<!-- 声明字符码编码过滤器 -->
+	<filter>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-class>com.wp.util.CharacterEncodingFilter</filter-class>
+		<!-- 设置初始化参数 -->
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<!-- 映射字符编码过滤器 -->
+	<filter-mapping>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<!-- 与所有请求关联  -->
+		<url-pattern>/*</url-pattern>
+		<!-- 设置过滤器对应的请求方式 -->
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<!-- 程序首页 -->
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>

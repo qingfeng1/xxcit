@@ -1,0 +1,107 @@
+    package test.hibernate.hbmOneToMany;  
+      
+    import org.hibernate.Session;  
+    import org.hibernate.SessionFactory;  
+    import org.hibernate.cfg.Configuration;  
+    import org.junit.Test;  
+      
+    public class App {  
+      
+        private static SessionFactory sessionFactory = new Configuration()//  
+                .configure()//  
+                .addClass(Department.class)// 添加Hibernate实体类（加载对应的映射文件）  
+                .addClass(Employee.class)//  
+                .buildSessionFactory();  
+      
+        @Test  
+        public void testSave() throws Exception {  
+            Session session = sessionFactory.openSession();  
+            session.beginTransaction();  
+            // --------------------------------------------  
+      
+            // 构建对象  
+            Department department = new Department();  
+            department.setName("开发部");  
+      
+            Employee employee = new Employee();  
+            employee.setName("张三");  
+      
+            Employee employee2 = new Employee();  
+            employee2.setName("李瑟");  
+      
+            // 关联起来  
+            employee.setDepartment(department);  
+            employee2.setDepartment(department);  
+            department.getEmployees().add(employee);  
+            department.getEmployees().add(employee2);  
+      
+            // 保存  
+            session.save(department);  
+            session.save(employee);  
+            session.save(employee2);  
+      
+            // --------------------------------------------  
+            session.getTransaction().commit();  
+            session.close();  
+        }  
+      
+        // 获取到部门关联的员工  
+        @Test  
+        public void testGet() throws Exception {  
+            Session session = sessionFactory.openSession();  
+            session.beginTransaction();  
+      
+            // 获取数据  
+            Department department = (Department) session.get(Department.class, 1);  
+            System.out.println(department.getId());  
+            System.out.println(department.getName());  
+            System.out.println(department.getEmployees());  
+      
+            session.getTransaction().commit();  
+            session.close();  
+        }  
+      
+        // 解除关联关系  
+        @Test  
+        public void testRemoveRelation() throws Exception {  
+            Session session = sessionFactory.openSession();  
+            session.beginTransaction();  
+            // --------------------------------------------  
+            // 从员工解除与部门的关联，也就是员工不再属于任何部门  
+            // Employee employee=(Employee) session.get(Employee.class, 8);  
+            // employee.setDepartment(null);  
+      
+            // 从部门解除员工关系  
+            Department department = (Department) session.get(Department.class, 1);  
+            // 要使这句有效,需将映射文件里的inverse设为false,即部门恢复维护关系  
+            department.getEmployees().clear();  
+      
+            // --------------------------------------------  
+            session.getTransaction().commit();  
+            session.close();  
+        }  
+      
+        // 删除部门及对员工的影响  
+        @Test  
+        public void testDelete() throws Exception {  
+            Session session = sessionFactory.openSession();  
+            session.beginTransaction();  
+            // --------------------------------------------  
+      
+            // 删除员工,对部门没有影响  
+            // Employee employee=(Employee) session.get(Employee.class, 9);  
+            // session.delete(employee);  
+      
+            /* 
+             * 如果没有关联的员工，能删除 
+             * 如果有关联的员工且inverse=true,由于不能维护关联关系，会直接执行删除且报异常 
+             * 如果有关联的员工且inverse=false,由于可以维护关联关系，会将员工的外键设为null，再删除自己 
+             */  
+            Department department = (Department) session.get(Department.class, 8);  
+            session.delete(department);  
+      
+            // --------------------------------------------  
+            session.getTransaction().commit();  
+            session.close();  
+        }  
+    }  

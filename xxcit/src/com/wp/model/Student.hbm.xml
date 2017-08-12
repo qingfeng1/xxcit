@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-8-2 11:42:49 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping package="com.wp.model">
+    <class name="com.wp.model.Student" table="tb_student">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="NAME" />
+        </property>
+        <property name="number" type="java.lang.String">
+            <column name="NUMBER" />
+        </property>
+        <property name="sex" type="java.lang.String">
+            <column name="SEX" />
+        </property>
+        <property name="college" type="java.lang.String">
+            <column name="COLLEGE" />
+        </property>
+        <property name="major" type="java.lang.String">
+            <column name="MAJOR" />
+        </property>
+        <property name="st_class" type="java.lang.String">
+            <column name="ST_CLASS" />
+        </property>
+        <property name="phonenumber" type="java.lang.String">
+            <column name="PHONENUMBER" />
+        </property>
+        <property name="qqnumber" type="java.lang.String">
+            <column name="QQNUMBER" />
+        </property>
+    </class>
+</hibernate-mapping>

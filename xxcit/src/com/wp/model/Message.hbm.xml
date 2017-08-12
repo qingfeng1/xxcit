@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-8-2 11:42:49 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping package="com.wp.model">
+    <class name="com.wp.model.Message" table="tb_message">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <property name="title" type="java.lang.String">
+            <column name="title" />
+        </property>
+        <property name="content" type="text">
+            <column name="content" />
+        </property>
+        <property name="createTime" type="java.util.Date">
+            <column name="createTime" />
+        </property>
+        
+        <!-- 此映射和回复是一对一的 关系 -->
+     <!--    <many-to-one name="revert" class="com.wp.model.Revert" unique="true" cascade="all" lazy="false"></many-to-one>
+        
+         -->
+
+        <!-- 此映射和用户是多对一的关系 -->
+        <many-to-one name="user" class="com.wp.model.User" lazy="false">
+            <column name="user" />
+        </many-to-one>
+        
+
+       <!-- inverse:这个属性（stus） 是否为关系的维护方，默认值为false
+            如果inverse设置为true，表示将由对方维护两者之间的关联关系
+         -->
+        <!--cascade（级联）意思是指定两个对象之间的操作联动关系，对一个对象执行了操作之后，对其指定的级联对象也需要执行相同的操作
+            all-代表在所有的情况下都执行级联操作
+            none-在所有情况下都不执行级联操作
+            save-update-在保存和更新的时候执行级联操作
+            delete-在删除的时候执行级联操作
+         -->
+         <!--lazy:延迟加载，默认true,如学生实体不调用班级实体信息，可以不用加载  -->
+         <!-- 此映射与回复一对多 -->
+         
+        <set name="revert" inverse="false" cascade="all" lazy="false" >  
+            <key column="msgid"></key>  
+            <one-to-many class="com.wp.model.Revert"   />  
+        </set>  
+        
+    </class>
+</hibernate-mapping>
+

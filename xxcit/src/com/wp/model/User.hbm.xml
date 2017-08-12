@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-8-2 11:42:49 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping package="com.wp.model">
+    <class name="com.wp.model.User" table="tb_user">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        
+        <!-- 鉴别器 -->
+        <discriminator column="type" type="java.lang.String"></discriminator>
+        <property name="username" type="java.lang.String">
+            <column name="username" />
+        </property>
+        <property name="password" type="java.lang.String">
+            <column name="password" />
+        </property>
+        <property name="img_head" type="java.lang.String">
+            <column name="img_head" />
+        </property>
+        
+        <!-- 子类（通过鉴别器区分） -->
+        <subclass name="Guest" discriminator-value="user_guest"></subclass>
+        <subclass name="Administrator"  discriminator-value="user_admin"></subclass>
+    </class>
+</hibernate-mapping>
